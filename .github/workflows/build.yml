@@ -35,8 +35,12 @@ jobs:
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
     
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+    - name: Fix gradlew line endings
+      run: |
+        # 修复行尾符问题
+        sed -i 's/\r$//' gradlew
+        chmod +x gradlew
+        echo "Gradlew permissions and line endings fixed"
     
     - name: Cache Gradle dependencies
       uses: actions/cache@v4
@@ -48,49 +52,100 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-gradle-
     
-    - name: Build with Gradle
+    - name: Debug - Show environment
       run: |
-        if [ "${{ github.event.inputs.build_type }}" == "release" ]; then
-          ./gradlew assembleRelease --stacktrace
-        else
-          ./gradlew assembleDebug --stacktrace
-        fi
+        echo "Current shell: $SHELL"
+        echo "Bash version: $BASH_VERSION"
+        echo "Java version:"
+        java -version
+        echo "Gradle wrapper version:"
+        ./gradlew --version || true
+    
+    - name: Build with Gradle (Debug)
+      if: github.event.inputs.build_type == 'debug' || github.event_name != 'workflow_dispatch'
+      run: |
+        bash ./gradlew assembleDebug --stacktrace
+      shell: bash
+      env:
+        BUILD_TYPE: debug
+    
+    - name: Build with Gradle (Release)
+      if: github.event.inputs.build_type == 'release'
+      run: |
+        bash ./gradlew assembleRelease --stacktrace
+      shell: bash
+      env:
+        BUILD_TYPE: release
     
     - name: Run tests
-      run: ./gradlew test --stacktrace
-    
-    - name: Upload APK - Release
-      if: github.event.inputs.build_type == 'release' || github.event_name == 'push'
-      uses: actions/upload-artifact@v4
-      with:
-        name: app-release
-        path: app/build/outputs/apk/release/app-release.apk
-        if-no-files-found: warn
+      run: |
+        bash ./gradlew test --stacktrace
+      shell: bash
     
     - name: Upload APK - Debug
-      if: github.event.inputs.build_type == 'debug' || github.event_name == 'pull_request'
+      if: github.event.inputs.build_type == 'debug' || github.event_name != 'workflow_dispatch'
       uses: actions/upload-artifact@v4
       with:
         name: app-debug
-        path: app/build/outputs/apk/debug/app-debug.apk
+        path: |
+          app/build/outputs/apk/debug/app-debug.apk
+          app/build/outputs/apk/debug/app-debug-*.apk
         if-no-files-found: warn
+        retention-days: 30
     
-    - name: Upload mapping file
+    - name: Upload APK - Release
+      if: github.event.inputs.build_type == 'release'
+      uses: actions/upload-artifact@v4
+      with:
+        name: app-release
+        path: |
+          app/build/outputs/apk/release/app-release.apk
+          app/build/outputs/apk/release/app-release-*.apk
+        if-no-files-found: warn
+        retention-days: 90
+    
+    - name: Upload mapping file (Release only)
       if: github.event.inputs.build_type == 'release'
       uses: actions/upload-artifact@v4
       with:
         name: mapping
         path: app/build/outputs/mapping/release/mapping.txt
         if-no-files-found: warn
+        retention-days: 90
+    
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results
+        path: |
+          app/build/reports/tests/
+          app/build/test-results/
+        if-no-files-found: warn
+        retention-days: 14
     
     - name: Generate build report
       if: always()
       run: |
         echo "## Build Summary" > build_report.md
-        echo "- Build Number: ${{ github.run_number }}" >> build_report.md
-        echo "- Commit: ${{ github.sha }}" >> build_report.md
-        echo "- Branch: ${{ github.ref_name }}" >> build_report.md
-        echo "- Status: ${{ job.status }}" >> build_report.md
+        echo "" >> build_report.md
+        echo "| Item | Value |" >> build_report.md
+        echo "|------|-------|" >> build_report.md
+        echo "| Build Number | ${{ github.run_number }} |" >> build_report.md
+        echo "| Commit | ${{ github.sha }} |" >> build_report.md
+        echo "| Branch | ${{ github.ref_name }} |" >> build_report.md
+        echo "| Build Type | ${{ github.event.inputs.build_type || 'debug' }} |" >> build_report.md
+        echo "| Status | ${{ job.status }} |" >> build_report.md
+        echo "| Triggered by | ${{ github.actor }} |" >> build_report.md
+        echo "" >> build_report.md
+        echo "### APK Files" >> build_report.md
+        echo "" >> build_report.md
+        
+        # 列出生成的APK文件
+        find app/build/outputs/apk -name "*.apk" -type f | while read -r file; do
+          size=$(du -h "$file" | cut -f1)
+          echo "- $file ($size)" >> build_report.md
+        done
     
     - name: Upload build report
       if: always()
@@ -98,3 +153,10 @@ jobs:
       with:
         name: build-report
         path: build_report.md
+        retention-days: 30
+    
+    - name: Send notification (optional)
+      if: failure()
+      run: |
+        echo "Build failed! Check the logs for details."
+        # 这里可以添加发送到Slack、邮件等的通知
