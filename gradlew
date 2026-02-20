@@ -39,20 +39,8 @@
 #
 #   Important for patching:
 #
-#   (2) This script targets any POSIX shell, so it avoids extensions provided
-#       by Bash, Ksh, etc; in particular arrays are avoided.
-#
-#       The "traditional" practice of packing multiple parameters into a
-#       space-separated string is a well documented source of bugs and security
-#       problems, so this is (mostly) avoided, by progressively accumulating
-#       options in "$@", and eventually passing that to Java.
-#
-#       Where the inherited environment variables (DEFAULT_JVM_OPTS, JAVA_OPTS,
-#       and GRADLE_OPTS) rely on word-splitting, this is performed explicitly;
-#       see the in-line comments for details.
-#
-#       There are tweaks for specific operating systems such as AIX, CygWin,
-#       Darwin, MinGW, and NonStop.
+#   (2) This script aims to be POSIX-compliant. In particular, it avoids
+#       bash-specific syntax and uses only POSIX features.
 #
 #   (3) This script is generated from the Groovy template
 #       https://github.com/gradle/gradle/blob/HEAD/subprojects/plugins/src/main/resources/org/gradle/api/internal/plugins/unixStartScript.txt
@@ -63,7 +51,6 @@
 ##############################################################################
 
 # Attempt to set APP_HOME
-
 # Resolve links: $0 may be a link
 app_path=$0
 
@@ -80,48 +67,57 @@ do
     esac
 done
 
-# This is normally unused
-# shellcheck disable=SC2034
+APP_HOME=$( cd "${APP_HOME:-./}" && pwd -P ) || exit
+
+APP_NAME="Gradle"
 APP_BASE_NAME=${0##*/}
-# Discard cd standard output in case $CDPATH is set https://github.com/gradle/gradle/issues/25036
-APP_HOME=$( cd "${APP_HOME:-./}" > /dev/null && pwd -P ) || exit
+
+# Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
+DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
 
 # Use the maximum available, or set MAX_FD != -1 to use that value.
 MAX_FD=maximum
 
 warn () {
     echo "$*"
-} >&2
+}
 
 die () {
     echo
     echo "$*"
     echo
     exit 1
-} >&2
+}
 
 # OS specific support (must be 'true' or 'false').
 cygwin=false
 msys=false
 darwin=false
 nonstop=false
-case "$( uname )" in                #(
-  CYGWIN* )         cygwin=true  ;; #(
-  Darwin* )         darwin=true  ;; #(
-  MSYS* | MINGW* )  msys=true    ;; #(
-  NONSTOP* )        nonstop=true ;;
+case "$(uname)" in
+  CYGWIN* )
+    cygwin=true
+    ;;
+  Darwin* )
+    darwin=true
+    ;;
+  MSYS* | MINGW* )
+    msys=true
+    ;;
+  NONSTOP* )
+    nonstop=true
+    ;;
 esac
 
 CLASSPATH=$APP_HOME/gradle/wrapper/gradle-wrapper.jar
-
 
 # Determine the Java command to use to start the JVM.
 if [ -n "$JAVA_HOME" ] ; then
     if [ -x "$JAVA_HOME/jre/sh/java" ] ; then
         # IBM's JDK on AIX uses strange locations for the executables
-        JAVACMD=$JAVA_HOME/jre/sh/java
+        JAVACMD="$JAVA_HOME/jre/sh/java"
     else
-        JAVACMD=$JAVA_HOME/bin/java
+        JAVACMD="$JAVA_HOME/bin/java"
     fi
     if [ ! -x "$JAVACMD" ] ; then
         die "ERROR: JAVA_HOME is set to an invalid directory: $JAVA_HOME
@@ -130,7 +126,7 @@ Please set the JAVA_HOME variable in your environment to match the
 location of your Java installation."
     fi
 else
-    JAVACMD=java
+    JAVACMD="java"
     which java >/dev/null 2>&1 || die "ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
 
 Please set the JAVA_HOME variable in your environment to match the
@@ -141,16 +137,12 @@ fi
 if ! "$cygwin" && ! "$darwin" && ! "$nonstop" ; then
     case $MAX_FD in #(
       max*)
-        # In POSIX sh, ulimit -H is undefined. That's why the result is checked to see if it worked.
-        # shellcheck disable=SC2039,SC3045
         MAX_FD=$( ulimit -H -n ) ||
             warn "Could not query maximum file descriptor limit"
     esac
     case $MAX_FD in  #(
       '' | soft) :;; #(
       *)
-        # In POSIX sh, ulimit -n is undefined. That's why the result is checked to see if it worked.
-        # shellcheck disable=SC2039,SC3045
         ulimit -n "$MAX_FD" ||
             warn "Could not set maximum file descriptor limit to $MAX_FD"
     esac
@@ -195,14 +187,11 @@ if "$cygwin" || "$msys" ; then
     done
 fi
 
-# Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
-DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
-
-# Collect all arguments for the java command:
-#   * DEFAULT_JVM_OPTS, JAVA_OPTS, JAVA_OPTS, and optsEnvironmentVar are not allowed to contain shell fragments,
-#     and any embedded shellness will be escaped.
-#   * For example: A user cannot expect ${Hostname} to be expanded, as it is an environment variable and will be
-#     treated as '${Hostname}' itself on the command line.
+# Collect all arguments for the java command;
+#   * $DEFAULT_JVM_OPTS, $JAVA_OPTS, and $GRADLE_OPTS can contain fragments of
+#     shell script including quotes and variable substitutions, so put them in
+#     double quotes to make sure that they get re-expanded; and
+#   * put everything else in single quotes, so that it's not re-expanded.
 
 set -- \
         "-Dorg.gradle.appname=$APP_BASE_NAME" \
@@ -230,6 +219,7 @@ fi
 # use this feature. However, POSIX shells that lack xargs are also very rare,
 # so this should be fine.
 
+# Defer execution until we have a "set" command that can take arrays.
 # Defer execution until we have a "set" command that can take arrays.
 if [ -n "$DEFAULT_JVM_OPTS" ] || [ -n "$JAVA_OPTS" ] || [ -n "$GRADLE_OPTS" ]; then
     set +e # ensure xargs dies if any of the wrapped commands die
