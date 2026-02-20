@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="@dimen/padding_large">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_500"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:title="SPI通信"
+        app:titleTextColor="@color/white"
+        app:navigationIcon="@drawable/ic_back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ScrollView
+        android:id="@+id/scrollConfig"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- SPI配置卡片 -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="@dimen/card_elevation"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                android:layout_marginBottom="@dimen/margin_medium">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/padding_medium">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SPI配置"
+                        android:textSize="@dimen/text_size_medium"
+                        android:textStyle="bold"
+                        android:textColor="@color/purple_700"
+                        android:layout_marginBottom="@dimen/margin_medium"/>
+
+                    <!-- SPI模式 -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SPI模式"
+                        android:textSize="@dimen/text_size_small"
+                        android:textColor="@color/gray"
+                        android:layout_marginBottom="@dimen/margin_small"/>
+
+                    <RadioGroup
+                        android:id="@+id/rgSpiMode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="@dimen/margin_medium">
+
+                        <RadioButton
+                            android:id="@+id/rbMode0"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="模式0"
+                            android:checked="true"/>
+
+                        <RadioButton
+                            android:id="@+id/rbMode1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="模式1"/>
+
+                        <RadioButton
+                            android:id="@+id/rbMode2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="模式2"/>
+
+                        <RadioButton
+                            android:id="@+id/rbMode3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="模式3"/>
+
+                    </RadioGroup>
+
+                    <!-- 时钟速度 -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Theme.CH34XTool.EditText"
+                        android:layout_marginBottom="@dimen/margin_medium"
+                        android:hint="时钟速度 (Hz)">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etSpeed"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:text="1000000"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- LSB优先 -->
+                    <CheckBox
+                        android:id="@+id/cbLsbFirst"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LSB优先"
+                        android:layout_marginBottom="@dimen/margin_medium"/>
+
+                    <!-- 配置按钮 -->
+                    <Button
+                        android:id="@+id/btnConfigure"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/button_height"
+                        android:text="配置SPI"
+                        style="@style/Theme.CH34XTool.Button"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 数据传输卡片 -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="@dimen/card_elevation"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                android:layout_marginBottom="@dimen/margin_medium">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/padding_medium">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="数据传输"
+                        android:textSize="@dimen/text_size_medium"
+                        android:textStyle="bold"
+                        android:textColor="@color/purple_700"
+                        android:layout_marginBottom="@dimen/margin_medium"/>
+
+                    <!-- 发送数据 -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Theme.CH34XTool.EditText"
+                        android:layout_marginBottom="@dimen/margin_medium"
+                        android:hint="发送数据">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etSendData"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="3"
+                            android:inputType="textMultiLine"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- 传输按钮 -->
+                    <Button
+                        android:id="@+id/btnTransfer"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/button_height"
+                        android:text="传输"
+                        style="@style/Theme.CH34XTool.Button"
+                        android:enabled="false"
+                        android:layout_marginBottom="@dimen/margin_medium"/>
+
+                    <!-- 读取长度 -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Theme.CH34XTool.EditText"
+                        android:layout_marginBottom="@dimen/margin_medium"
+                        android:hint="读取长度 (字节)">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etReadLength"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:text="1"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- 读取按钮 -->
+                    <Button
+                        android:id="@+id/btnRead"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/button_height"
+                        android:text="读取"
+                        style="@style/Theme.CH34XTool.Button.Outline"
+                        android:enabled="false"
+                        android:layout_marginBottom="@dimen/margin_medium"/>
+
+                    <!-- 写入数据 -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Theme.CH34XTool.EditText"
+                        android:layout_marginBottom="@dimen/margin_medium"
+                        android:hint="写入数据">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etWriteData"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="3"
+                            android:inputType="textMultiLine"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- 写入按钮 -->
+                    <Button
+                        android:id="@+id/btnWrite"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/button_height"
+                        android:text="写入"
+                        style="@style/Theme.CH34XTool.Button.Outline"
+                        android:enabled="false"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 显示模式 -->
+            <CheckBox
+                android:id="@+id/cbHexMode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="十六进制显示/输入"
+                android:layout_marginBottom="@dimen/margin_medium"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- 数据显示区域 -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardDataDisplay"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:cardElevation="@dimen/card_elevation"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        android:layout_marginTop="@dimen/margin_medium"
+        app:layout_constraintTop_toBottomOf="@id/scrollConfig"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/padding_medium"
+                android:background="@color/light_gray">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="接收数据"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textStyle="bold"/>
+
+                <Button
+                    android:id="@+id/btnClear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/clear"
+                    style="@style/Theme.CH34XTool.Button.Outline"
+                    android:textSize="@dimen/text_size_small"
+                    android:minHeight="0dp"
+                    android:padding="@dimen/padding_small"/>
+
+            </LinearLayout>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tvReceivedData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    android:textSize="@dimen/text_size_small"
+                    android:fontFamily="monospace"
+                    android:lineSpacingExtra="2dp"/>
+
+            </ScrollView>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

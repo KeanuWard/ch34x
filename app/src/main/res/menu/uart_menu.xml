@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- 清除显示 -->
+    <item
+        android:id="@+id/action_clear"
+        android:title="清除"
+        android:icon="@drawable/ic_clear"
+        app:showAsAction="ifRoom" />
+
+    <!-- 保存日志 -->
+    <item
+        android:id="@+id/action_save_log"
+        android:title="保存日志"
+        android:icon="@drawable/ic_save"
+        app:showAsAction="ifRoom" />
+
+    <!-- 发送文件 -->
+    <item
+        android:id="@+id/action_send_file"
+        android:title="发送文件"
+        android:icon="@drawable/ic_file"
+        app:showAsAction="ifRoom" />
+
+    <!-- 显示模式 -->
+    <item
+        android:id="@+id/action_display_mode"
+        android:title="显示模式"
+        app:showAsAction="never">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/action_display_hex"
+                    android:title="十六进制" />
+                <item
+                    android:id="@+id/action_display_ascii"
+                    android:title="ASCII" />
+                <item
+                    android:id="@+id/action_display_mixed"
+                    android:title="混合显示" />
+            </group>
+        </menu>
+    </item>
+
+    <!-- 自动换行 -->
+    <item
+        android:id="@+id/action_word_wrap"
+        android:title="自动换行"
+        android:checkable="true"
+        app:showAsAction="never" />
+
+    <!-- 显示时间戳 -->
+    <item
+        android:id="@+id/action_timestamp"
+        android:title="显示时间戳"
+        android:checkable="true"
+        app:showAsAction="never" />
+
+    <!-- 暂停显示 -->
+    <item
+        android:id="@+id/action_pause"
+        android:title="暂停显示"
+        android:checkable="true"
+        app:showAsAction="never" />
+
+</menu>

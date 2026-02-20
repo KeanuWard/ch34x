@@ -1,0 +1,100 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+    inputs:
+      build_type:
+        description: 'Build type'
+        required: true
+        default: 'debug'
+        type: choice
+        options:
+          - debug
+          - release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+    
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+    
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+    
+    - name: Cache Gradle dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+    
+    - name: Build with Gradle
+      run: |
+        if [ "${{ github.event.inputs.build_type }}" == "release" ]; then
+          ./gradlew assembleRelease --stacktrace
+        else
+          ./gradlew assembleDebug --stacktrace
+        fi
+    
+    - name: Run tests
+      run: ./gradlew test --stacktrace
+    
+    - name: Upload APK - Release
+      if: github.event.inputs.build_type == 'release' || github.event_name == 'push'
+      uses: actions/upload-artifact@v4
+      with:
+        name: app-release
+        path: app/build/outputs/apk/release/app-release.apk
+        if-no-files-found: warn
+    
+    - name: Upload APK - Debug
+      if: github.event.inputs.build_type == 'debug' || github.event_name == 'pull_request'
+      uses: actions/upload-artifact@v4
+      with:
+        name: app-debug
+        path: app/build/outputs/apk/debug/app-debug.apk
+        if-no-files-found: warn
+    
+    - name: Upload mapping file
+      if: github.event.inputs.build_type == 'release'
+      uses: actions/upload-artifact@v4
+      with:
+        name: mapping
+        path: app/build/outputs/mapping/release/mapping.txt
+        if-no-files-found: warn
+    
+    - name: Generate build report
+      if: always()
+      run: |
+        echo "## Build Summary" > build_report.md
+        echo "- Build Number: ${{ github.run_number }}" >> build_report.md
+        echo "- Commit: ${{ github.sha }}" >> build_report.md
+        echo "- Branch: ${{ github.ref_name }}" >> build_report.md
+        echo "- Status: ${{ job.status }}" >> build_report.md
+    
+    - name: Upload build report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-report
+        path: build_report.md

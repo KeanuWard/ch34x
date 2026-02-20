@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 波特率选项 -->
+    <string-array name="baud_rates">
+        <item>1200</item>
+        <item>2400</item>
+        <item>4800</item>
+        <item>9600</item>
+        <item>19200</item>
+        <item>38400</item>
+        <item>57600</item>
+        <item>115200</item>
+        <item>230400</item>
+        <item>460800</item>
+        <item>921600</item>
+        <item>1000000</item>
+        <item>1500000</item>
+        <item>2000000</item>
+        <item>3000000</item>
+    </string-array>
+
+    <!-- 数据位选项 -->
+    <string-array name="data_bits">
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+    </string-array>
+
+    <!-- 停止位选项 -->
+    <string-array name="stop_bits">
+        <item>1</item>
+        <item>1.5</item>
+        <item>2</item>
+    </string-array>
+
+    <!-- 校验位选项 -->
+    <string-array name="parity_options">
+        <item>无校验</item>
+        <item>奇校验</item>
+        <item>偶校验</item>
+        <item>标记校验</item>
+        <item>空格校验</item>
+    </string-array>
+
+    <!-- 流控制选项 -->
+    <string-array name="flow_control_options">
+        <item>无流控</item>
+        <item>硬件流控</item>
+        <item>软件流控</item>
+    </string-array>
+
+    <!-- SPI模式选项 -->
+    <string-array name="spi_modes">
+        <item>模式0 (CPOL=0, CPHA=0)</item>
+        <item>模式1 (CPOL=0, CPHA=1)</item>
+        <item>模式2 (CPOL=1, CPHA=0)</item>
+        <item>模式3 (CPOL=1, CPHA=1)</item>
+    </string-array>
+
+    <!-- Flash操作选项 -->
+    <string-array name="flash_operations">
+        <item>读取</item>
+        <item>写入</item>
+        <item>擦除</item>
+        <item>校验</item>
+        <item>整片擦除</item>
+    </string-array>
+
+    <!-- 文件编码选项 -->
+    <string-array name="file_encodings">
+        <item>UTF-8</item>
+        <item>GBK</item>
+        <item>GB2312</item>
+        <item>ISO-8859-1</item>
+        <item>UTF-16</item>
+    </string-array>
+
+    <!-- 日志级别选项 -->
+    <string-array name="log_levels">
+        <item>调试</item>
+        <item>信息</item>
+        <item>警告</item>
+        <item>错误</item>
+    </string-array>
+
+    <!-- 显示模式选项 -->
+    <string-array name="display_modes">
+        <item>十六进制</item>
+        <item>ASCII</item>
+        <item>混合显示</item>
+    </string-array>
+
+    <!-- 单位选项 -->
+    <string-array name="units">
+        <item>字节</item>
+        <item>KB</item>
+        <item>MB</item>
+        <item>GB</item>
+    </string-array>
+
+    <!-- 速度单位选项 -->
+    <string-array name="speed_units">
+        <item>B/s</item>
+        <item>KB/s</item>
+        <item>MB/s</item>
+    </string-array>
+
+    <!-- 主题选项 -->
+    <string-array name="theme_options">
+        <item>浅色主题</item>
+        <item>深色主题</item>
+        <item>跟随系统</item>
+    </string-array>
+
+    <!-- 语言选项 -->
+    <string-array name="language_options">
+        <item>中文</item>
+        <item>English</item>
+    </string-array>
+
+    <!-- USB权限选项 -->
+    <string-array name="usb_permission_options">
+        <item>始终允许</item>
+        <item>每次询问</item>
+        <item>拒绝</item>
+    </string-array>
+
+    <!-- 错误处理选项 -->
+    <string-array name="error_handling_options">
+        <item>自动重试</item>
+        <item>忽略错误</item>
+        <item>停止操作</item>
+        <item>询问用户</item>
+    </string-array>
+
+    <!-- 自动重试次数选项 -->
+    <string-array name="retry_count_options">
+        <item>0次</item>
+        <item>1次</item>
+        <item>2次</item>
+        <item>3次</item>
+        <item>5次</item>
+        <item>10次</item>
+    </string-array>
+
+    <!-- 缓冲区大小选项 -->
+    <string-array name="buffer_size_options">
+        <item>64字节</item>
+        <item>128字节</item>
+        <item>256字节</item>
+        <item>512字节</item>
+        <item>1KB</item>
+        <item>2KB</item>
+        <item>4KB</item>
+        <item>8KB</item>
+        <item>16KB</item>
+    </string-array>
+
+    <!-- 超时时间选项 -->
+    <string-array name="timeout_options">
+        <item>100ms</item>
+        <item>200ms</item>
+        <item>500ms</item>
+        <item>1秒</item>
+        <item>2秒</item>
+        <item>5秒</item>
+        <item>10秒</item>
+        <item>30秒</item>
+    </string-array>
+
+    <!-- 字符编码选项 -->
+    <string-array name="charset_options">
+        <item>UTF-8</item>
+        <item>GBK</item>
+        <item>GB2312</item>
+        <item>ISO-8859-1</item>
+        <item>US-ASCII</item>
+        <item>UTF-16BE</item>
+        <item>UTF-16LE</item>
+    </string-array>
+
+    <!-- 换行符选项 -->
+    <string-array name="line_ending_options">
+        <item>LF (Unix)</item>
+        <item>CR (Mac)</item>
+        <item>CRLF (Windows)</item>
+        <item>自动检测</item>
+    </string-array>
+
+    <!-- 时间戳格式选项 -->
+    <string-array name="timestamp_format_options">
+        <item>HH:mm:ss</item>
+        <item>HH:mm:ss.SSS</item>
+        <item>yyyy-MM-dd HH:mm:ss</item>
+        <item>无时间戳</item>
+    </string-array>
+
+    <!-- 颜色主题选项 -->
+    <string-array name="color_theme_options">
+        <item>紫色(默认)</item>
+        <item>蓝色</item>
+        <item>绿色</item>
+        <item>红色</item>
+        <item>橙色</item>
+        <item>灰色</item>
+    </string-array>
+</resources>

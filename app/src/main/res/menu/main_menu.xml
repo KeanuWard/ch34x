@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- 扫描设备 -->
+    <item
+        android:id="@+id/action_scan"
+        android:title="扫描设备"
+        android:icon="@drawable/ic_scan"
+        app:showAsAction="ifRoom" />
+
+    <!-- 设置 -->
+    <item
+        android:id="@+id/action_settings"
+        android:title="设置"
+        android:icon="@drawable/ic_settings"
+        app:showAsAction="ifRoom" />
+
+    <!-- 关于 -->
+    <item
+        android:id="@+id/action_about"
+        android:title="关于"
+        app:showAsAction="never" />
+
+    <!-- 帮助 -->
+    <item
+        android:id="@+id/action_help"
+        android:title="帮助"
+        app:showAsAction="never" />
+
+    <!-- 退出 -->
+    <item
+        android:id="@+id/action_exit"
+        android:title="退出"
+        app:showAsAction="never" />
+
+</menu>

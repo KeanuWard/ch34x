@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="@dimen/padding_large">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_500"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:title="Flash编程"
+        app:titleTextColor="@color/white"
+        app:navigationIcon="@drawable/ic_back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_medium"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Flash选择卡片 -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="@dimen/card_elevation"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                android:layout_marginBottom="@dimen/margin_medium">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/padding_medium">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Flash选择"
+                        android:textSize="@dimen/text_size_medium"
+                        android:textStyle="bold"
+                        android:textColor="@color/purple_700"
+                        android:layout_marginBottom="@dimen/margin_medium"/>
+
+                    <AutoCompleteTextView
+                        android:id="@+id/spinnerFlashList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="选择Flash型号"
+                        android:dropDownHeight="wrap_content"
+                        android:completionThreshold="1"/>
+
+                    <Button
+                        android:id="@+id/btnIdentify"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/button_height"
+                        android:text="识别Flash"
+                        style="@style/Theme.CH34XTool.Button"
+                        android:layout_marginTop="@dimen/margin_medium"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Flash信息卡片 -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="@dimen/card_elevation"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                android:layout_marginBottom="@dimen/margin_medium">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/padding_medium">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Flash信息"
+                        android:textSize="@dimen/text_size_medium"
+                        android:textStyle="bold"
+                        android:textColor="@color/purple_700"
+                        android:layout_marginBottom="@dimen/margin_medium"/>
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:stretchColumns="1">
+
+                        <TableRow>
+                            <TextView android:text="型号:"/>
+                            <TextView android:id="@+id/tvFlashName" android:text="-"/>
+                        </TableRow>
+
+                        <TableRow>
+                            <TextView android:text="容量:"/>
+                            <TextView android:id="@+id/tvFlashSize" android:text="-"/>
+                        </TableRow>
+
+                        <TableRow>
+                            <TextView android:text="页大小:"/>
+                            <TextView android:id="@+id/tvFlashPageSize" android:text="-"/>
+                        </TableRow>
+
+                        <TableRow>
+                            <TextView android:text="扇区大小:"/>
+                            <TextView android:id="@+id/tvFlashSectorSize" android:text="-"/>
+                        </TableRow>
+
+                        <TableRow>
+                            <TextView android:text="Flash ID:"/>
+                            <TextView android:id="@+id/tvFlashId" android:text="-"/>
+                        </TableRow>
+
+                    </TableLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 操作参数卡片 -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="@dimen/card_elevation"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                android:layout_marginBottom="@dimen/margin_medium">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/padding_medium">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="操作参数"
+                        android:textSize="@dimen/text_size_medium"
+                        android:textStyle="bold"
+                        android:textColor="@color/purple_700"
+                        android:layout_marginBottom="@dimen/margin_medium"/>
+
+                    <!-- 起始地址 -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Theme.CH34XTool.EditText"
+                        android:layout_marginBottom="@dimen/margin_medium"
+                        android:hint="起始地址 (十六进制)">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etStartAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:text="0x00000000"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- 长度 -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Theme.CH34XTool.EditText"
+                        android:layout_marginBottom="@dimen/margin_medium"
+                        android:hint="长度 (字节)">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etLength"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- 文件路径 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="@dimen/margin_medium">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            style="@style/Theme.CH34XTool.EditText"
+                            android:hint="文件路径">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etFilePath"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:enabled="false"/>
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <Button
+                            android:id="@+id/btnBrowse"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/browse"
+                            android:layout_marginStart="@dimen/margin_small"/>
+
+                    </LinearLayout>
+
+                    <!-- 选项 -->
+                    <CheckBox
+                        android:id="@+id/cbVerify"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="写入后校验"
+                        android:checked="true"/>
+
+                    <CheckBox
+                        android:id="@+id/cbAutoErase"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="自动擦除"
+                        android:checked="true"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 操作按钮 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/margin_medium">
+
+                <Button
+                    android:id="@+id/btnRead"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/button_height"
+                    android:layout_weight="1"
+                    android:text="@string/read_flash"
+                    style="@style/Theme.CH34XTool.Button"
+                    android:layout_marginEnd="@dimen/margin_small"/>
+
+                <Button
+                    android:id="@+id/btnWrite"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/button_height"
+                    android:layout_weight="1"
+                    android:text="@string/write_flash"
+                    style="@style/Theme.CH34XTool.Button"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/margin_medium">
+
+                <Button
+                    android:id="@+id/btnErase"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/button_height"
+                    android:layout_weight="1"
+                    android:text="@string/erase_flash"
+                    style="@style/Theme.CH34XTool.Button.Outline"
+                    android:layout_marginEnd="@dimen/margin_small"/>
+
+                <Button
+                    android:id="@+id/btnVerify"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/button_height"
+                    android:layout_weight="1"
+                    android:text="@string/verify_flash"
+                    style="@style/Theme.CH34XTool.Button.Outline"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnChipErase"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
+                android:text="整片擦除"
+                style="@style/Theme.CH34XTool.Button.Outline"
+                android:layout_marginBottom="@dimen/margin_large"/>
+
+            <!-- 数据库管理 -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="@dimen/card_elevation"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                android:layout_marginBottom="@dimen/margin_medium">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/padding_medium">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Flash数据库管理"
+                        android:textSize="@dimen/text_size_medium"
+                        android:textStyle="bold"
+                        android:textColor="@color/purple_700"
+                        android:layout_marginBottom="@dimen/margin_medium"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btnExportDb"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/button_height"
+                            android:layout_weight="1"
+                            android:text="导出数据库"
+                            style="@style/Theme.CH34XTool.Button.Outline"
+                            android:layout_marginEnd="@dimen/margin_small"/>
+
+                        <Button
+                            android:id="@+id/btnImportDb"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/button_height"
+                            android:layout_weight="1"
+                            android:text="导入数据库"
+                            style="@style/Theme.CH34XTool.Button.Outline"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 状态显示 -->
+            <TextView
+                android:id="@+id/tvFilePath"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="@dimen/text_size_small"
+                android:textColor="@color/gray"
+                android:layout_marginBottom="@dimen/margin_medium"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

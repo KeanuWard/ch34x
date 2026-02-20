@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.CH34XTool" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/white</item>
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        
+        <!-- Android 12+ specific attributes -->
+        <item name="android:statusBarColor">@color/purple_700</item>
+        <item name="android:navigationBarColor">@color/purple_500</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        
+        <!-- Material You dynamic colors -->
+        <item name="android:colorAccent">@color/purple_500</item>
+        
+        <!-- Splash screen API (Android 12+) -->
+        <item name="android:windowSplashScreenBackground">@color/purple_700</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        
+        <!-- Edge-to-edge support -->
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+        
+        <!-- Predicative back gesture (Android 13+) -->
+        <item name="android:enableOnBackInvokedCallback">true</item>
+    </style>
+
+    <!-- Android 12+ splash screen theme -->
+    <style name="Theme.CH34XTool.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/purple_700</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Theme.CH34XTool</item>
+    </style>
+</resources>
