@@ -24,25 +24,42 @@ jobs:
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
     
-    - name: Cache Gradle
+    - name: Remove problematic files
+      run: |
+        # 删除有问题的 gradlew 脚本
+        rm -f gradlew gradlew.bat
+        
+        # 删除 gradle wrapper 目录（我们将使用系统 gradle）
+        rm -rf gradle
+        
+        echo "Removed problematic files"
+    
+    - name: Install Gradle
+      run: |
+        # 安装 Gradle 8.0
+        wget -q https://services.gradle.org/distributions/gradle-8.0-bin.zip
+        unzip -q gradle-8.0-bin.zip
+        echo "$(pwd)/gradle-8.0/bin" >> $GITHUB_PATH
+        gradle -v
+    
+    - name: Cache Gradle dependencies
       uses: actions/cache@v4
       with:
-        path: |
-          ~/.gradle/caches
-          ~/.gradle/wrapper
+        path: ~/.gradle/caches
         key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
         restore-keys: |
           ${{ runner.os }}-gradle-
     
     - name: Build with Gradle
       run: |
-        # 直接使用 gradle 命令，不用 gradlew
+        # 直接使用系统 gradle 命令
         gradle assembleDebug --stacktrace
       env:
-        GRADLE_OPTS: -Dorg.gradle.daemon=false
+        GRADLE_OPTS: -Dorg.gradle.daemon=false -Dorg.gradle.jvmargs=-Xmx2048m
     
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: app-debug
         path: app/build/outputs/apk/debug/*.apk
+        retention-days: 30
