@@ -1,0 +1,19 @@
+{
+  "chips": [
+    {"manufacturer":"Winbond","model":"W25Q128JV","jedec":"EF4018","page_size":256,"sector_size":4096,"commands":{"read_id":"9F","read":"03","fast_read":"0B","write_enable":"06","page_program":"02","sector_erase":"20","chip_erase":"C7","read_status":"05"}},
+    {"manufacturer":"Winbond","model":"W25Q64FV","jedec":"EF4017","page_size":256,"sector_size":4096,"commands":{"read_id":"9F","read":"03","fast_read":"0B","write_enable":"06","page_program":"02","sector_erase":"20","chip_erase":"C7","read_status":"05"}},
+    {"manufacturer":"GigaDevice","model":"GD25Q64C","jedec":"C84017","page_size":256,"sector_size":4096,"commands":{"read_id":"9F","read":"03","fast_read":"0B","write_enable":"06","page_program":"02","sector_erase":"20","chip_erase":"C7","read_status":"05"}},
+    {"manufacturer":"GigaDevice","model":"GD25Q128C","jedec":"C84018","page_size":256,"sector_size":4096,"commands":{"read_id":"9F","read":"03","fast_read":"0B","write_enable":"06","page_program":"02","sector_erase":"20","chip_erase":"C7","read_status":"05"}},
+    {"manufacturer":"Macronix","model":"MX25L12835F","jedec":"C22018","page_size":256,"sector_size":4096,"commands":{"read_id":"9F","read":"03","fast_read":"0B","write_enable":"06","page_program":"02","sector_erase":"20","chip_erase":"C7","read_status":"05"}},
+    {"manufacturer":"Macronix","model":"MX25L6406E","jedec":"C22017","page_size":256,"sector_size":4096,"commands":{"read_id":"9F","read":"03","fast_read":"0B","write_enable":"06","page_program":"02","sector_erase":"20","chip_erase":"C7","read_status":"05"}},
+    {"manufacturer":"Micron","model":"MT25QL128","jedec":"20BA18","page_size":256,"sector_size":4096,"commands":{"read_id":"9F","read":"03","fast_read":"0B","write_enable":"06","page_program":"02","sector_erase":"20","chip_erase":"C7","read_status":"05"}},
+    {"manufacturer":"Micron","model":"MT25QL64","jedec":"20BA17","page_size":256,"sector_size":4096,"commands":{"read_id":"9F","read":"03","fast_read":"0B","write_enable":"06","page_program":"02","sector_erase":"20","chip_erase":"C7","read_status":"05"}},
+    {"manufacturer":"Cypress","model":"S25FL128S","jedec":"011818","page_size":256,"sector_size":4096,"commands":{"read_id":"9F","read":"03","fast_read":"0B","write_enable":"06","page_program":"02","sector_erase":"20","chip_erase":"C7","read_status":"05"}},
+    {"manufacturer":"Cypress","model":"S25FL064L","jedec":"011817","page_size":256,"sector_size":4096,"commands":{"read_id":"9F","read":"03","fast_read":"0B","write_enable":"06","page_program":"02","sector_erase":"20","chip_erase":"C7","read_status":"05"}},
+    {"manufacturer":"Adesto","model":"AT25DF321","jedec":"1F4502","page_size":256,"sector_size":4096,"commands":{"read_id":"9F","read":"03","fast_read":"0B","write_enable":"06","page_program":"02","sector_erase":"20","chip_erase":"C7","read_status":"05"}},
+    {"manufacturer":"Adesto","model":"AT25DF641","jedec":"1F4702","page_size":256,"sector_size":4096,"commands":{"read_id":"9F","read":"03","fast_read":"0B","write_enable":"06","page_program":"02","sector_erase":"20","chip_erase":"C7","read_status":"05"}},
+    {"manufacturer":"ISSI","model":"IS25LP128","jedec":"9D6018","page_size":256,"sector_size":4096,"commands":{"read_id":"9F","read":"03","fast_read":"0B","write_enable":"06","page_program":"02","sector_erase":"20","chip_erase":"C7","read_status":"05"}},
+    {"manufacturer":"ISSI","model":"IS25LP064","jedec":"9D6017","page_size":256,"sector_size":4096,"commands":{"read_id":"9F","read":"03","fast_read":"0B","write_enable":"06","page_program":"02","sector_erase":"20","chip_erase":"C7","read_status":"05"}}
+    // …重复到50条甚至千条，可用脚本批量生成
+  ]
+}

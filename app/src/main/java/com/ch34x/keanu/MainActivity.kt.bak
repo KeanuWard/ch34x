@@ -1,0 +1,216 @@
+package com.ch34x.keanu
+
+import android.app.PendingIntent
+import android.content.*
+import android.hardware.usb.*
+import android.os.Bundle
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import com.ch34x.keanu.ch34x.*
+
+/*
+MainActivity
+
+工具主界面
+
+职责：
+1 扫描USB设备
+2 请求USB权限
+3 识别CH34x设备
+4 打开设备
+5 初始化Driver
+6 根据芯片能力显示功能菜单
+*/
+
+class MainActivity : AppCompatActivity() {
+
+private lateinit var usbManager: UsbManager
+
+private lateinit var scanButton: Button
+private lateinit var openButton: Button
+private lateinit var closeButton: Button
+private lateinit var deviceInfo: TextView
+
+private var selectedDevice: UsbDevice? = null
+private var driver: CH34xDriver? = null
+
+companion object {
+
+    const val ACTION_USB_PERMISSION =
+        "com.ch34x.keanu.USB_PERMISSION"
+
+}
+
+override fun onCreate(savedInstanceState: Bundle?) {
+
+    super.onCreate(savedInstanceState)
+
+    setContentView(R.layout.activity_main)
+
+    usbManager =
+        getSystemService(Context.USB_SERVICE) as UsbManager
+
+    scanButton = findViewById(R.id.btn_scan)
+    openButton = findViewById(R.id.btn_open)
+    closeButton = findViewById(R.id.btn_close)
+    deviceInfo = findViewById(R.id.txt_device)
+
+    scanButton.setOnClickListener {
+
+        scanDevices()
+
+    }
+
+    openButton.setOnClickListener {
+
+        requestPermission()
+
+    }
+
+    closeButton.setOnClickListener {
+
+        closeDevice()
+
+    }
+
+    registerReceiver(
+        usbReceiver,
+        IntentFilter(ACTION_USB_PERMISSION)
+    )
+
+}
+
+/*
+ 扫描USB设备
+ */
+private fun scanDevices() {
+
+    val deviceList = usbManager.deviceList
+
+    if (deviceList.isEmpty()) {
+
+        deviceInfo.text = "未找到USB设备"
+
+        return
+
+    }
+
+    for (device in deviceList.values) {
+
+        if (device.vendorId == 0x1A86) {
+
+            selectedDevice = device
+
+            deviceInfo.text =
+                "发现CH34x设备\nVID=${device.vendorId}\nPID=${device.productId}"
+
+            return
+
+        }
+
+    }
+
+    deviceInfo.text = "未找到CH34x设备"
+
+}
+
+/*
+ 请求USB权限
+ */
+private fun requestPermission() {
+
+    val device = selectedDevice ?: return
+
+    val permissionIntent =
+        PendingIntent.getBroadcast(
+            this,
+            0,
+            Intent(ACTION_USB_PERMISSION),
+            PendingIntent.FLAG_IMMUTABLE
+        )
+
+    usbManager.requestPermission(device, permissionIntent)
+
+}
+
+/*
+ 打开设备
+ */
+private fun openDevice(device: UsbDevice) {
+
+    val connection = usbManager.openDevice(device)
+
+    if (connection == null) {
+
+        deviceInfo.text = "设备打开失败"
+
+        return
+
+    }
+
+    driver = when (device.productId) {
+
+        0x7523 -> CH340Driver(device, connection)
+
+        0x5512 -> CH341Driver(device, connection)
+
+        else -> null
+    }
+
+    driver?.open()
+
+    deviceInfo.text =
+        "设备已打开\nDriver=${driver?.javaClass?.simpleName}"
+
+}
+
+/*
+ 关闭设备
+ */
+private fun closeDevice() {
+
+    driver?.close()
+
+    deviceInfo.text = "设备已关闭"
+
+}
+
+/*
+ USB权限回调
+ */
+private val usbReceiver = object : BroadcastReceiver() {
+
+    override fun onReceive(context: Context, intent: Intent) {
+
+        if (intent.action == ACTION_USB_PERMISSION) {
+
+            synchronized(this) {
+
+                val device: UsbDevice? =
+                    intent.getParcelableExtra(
+                        UsbManager.EXTRA_DEVICE
+                    )
+
+                if (intent.getBooleanExtra(
+                        UsbManager.EXTRA_PERMISSION_GRANTED,
+                        false
+                    )
+                ) {
+
+                    device?.let {
+
+                        openDevice(it)
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+}
+
+}

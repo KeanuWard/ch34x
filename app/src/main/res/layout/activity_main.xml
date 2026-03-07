@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 顶部标题 -->
+    <TextView
+        android:id="@+id/txt_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CH34x 工业工具"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:padding="16dp"/>
+
+    <!-- Fragment 容器 -->
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <!-- 底部模块切换 -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_uart"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="UART"/>
+
+        <Button
+            android:id="@+id/btn_spi"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="SPI"/>
+
+        <Button
+            android:id="@+id/btn_i2c"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="I2C"/>
+
+        <Button
+            android:id="@+id/btn_gpio"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="GPIO"/>
+
+        <Button
+            android:id="@+id/btn_eeprom"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="EEPROM"/>
+
+    </LinearLayout>
+
+</LinearLayout>

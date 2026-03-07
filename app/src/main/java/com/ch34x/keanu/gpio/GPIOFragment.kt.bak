@@ -1,0 +1,46 @@
+package com.ch34x.keanu.gpio
+
+import android.os.Bundle
+import android.view.*
+import android.widget.*
+import androidx.fragment.app.Fragment
+import com.ch34x.keanu.R
+
+/*
+ GPIO界面
+ ------------------------------------------------
+ 输入/输出控制
+ 状态显示
+ */
+class GPIOFragment : Fragment() {
+
+    private lateinit var readBtn: Button
+    private lateinit var toggleBtn: Button
+    private lateinit var statusView: TextView
+    private lateinit var gpioManager: GPIOManager
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val v = inflater.inflate(R.layout.fragment_gpio, container, false)
+        readBtn = v.findViewById(R.id.btn_gpio_read)
+        toggleBtn = v.findViewById(R.id.btn_gpio_toggle)
+        statusView = v.findViewById(R.id.txt_gpio_status)
+
+        readBtn.setOnClickListener { read() }
+        toggleBtn.setOnClickListener { toggle() }
+        return v
+    }
+
+    private fun read() {
+        val value = gpioManager.read()
+        statusView.text = "GPIO状态: 0x%02X".format(value)
+    }
+
+    private fun toggle() {
+        gpioManager.toggle()
+        statusView.text = "GPIO切换完成"
+    }
+}

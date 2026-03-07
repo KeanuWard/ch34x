@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+    USB Device Filter
+    用于自动识别 CH340 / CH341
+--><resources><!-- CH340 -->
+<usb-device
+    vendor-id="6790"
+    product-id="29987" />
+
+<!-- CH341 -->
+<usb-device
+    vendor-id="6790"
+    product-id="21778" />
+
+</resources>

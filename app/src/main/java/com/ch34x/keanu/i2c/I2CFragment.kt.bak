@@ -1,0 +1,62 @@
+package com.ch34x.keanu.i2c
+
+import android.os.Bundle
+import android.view.*
+import android.widget.*
+import androidx.fragment.app.Fragment
+import com.ch34x.keanu.R
+
+/*
+ I2C界面
+ ------------------------------------------------
+ 扫描总线设备
+ 读取/写入I2C寄存器
+ 支持连续读取
+ */
+class I2CFragment : Fragment() {
+
+    private lateinit var scanBtn: Button
+    private lateinit var readBtn: Button
+    private lateinit var writeBtn: Button
+    private lateinit var statusView: TextView
+    private lateinit var i2cManager: I2CManager
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val v = inflater.inflate(R.layout.fragment_i2c, container, false)
+
+        scanBtn = v.findViewById(R.id.btn_i2c_scan)
+        readBtn = v.findViewById(R.id.btn_i2c_read)
+        writeBtn = v.findViewById(R.id.btn_i2c_write)
+        statusView = v.findViewById(R.id.txt_i2c_status)
+
+        scanBtn.setOnClickListener { scan() }
+        readBtn.setOnClickListener { read() }
+        writeBtn.setOnClickListener { write() }
+
+        return v
+    }
+
+    private fun scan() {
+        val devices = i2cManager.scan()
+        statusView.text = if (devices.isEmpty()) "未发现I2C设备" else "发现设备: ${devices.joinToString(", ") { "0x%02X".format(it) }}"
+    }
+
+    private fun read() {
+        val addr = 0x50
+        val reg = 0x00
+        val data = i2cManager.read(addr, reg, 16)
+        statusView.text = "读取0x%02X: %s".format(addr, data.joinToString(" ") { "%02X".format(it) })
+    }
+
+    private fun write() {
+        val addr = 0x50
+        val reg = 0x00
+        val data = byteArrayOf(0x01, 0x02)
+        i2cManager.write(addr, reg, data)
+        statusView.text = "写入0x%02X完成".format(addr)
+    }
+}

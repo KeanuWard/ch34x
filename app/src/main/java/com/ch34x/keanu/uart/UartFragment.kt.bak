@@ -1,0 +1,106 @@
+package com.ch34x.keanu.uart
+
+import android.os.Bundle
+import android.view.*
+import android.widget.*
+import androidx.fragment.app.Fragment
+import com.ch34x.keanu.R
+import com.ch34x.keanu.utils.HexUtils
+
+/*
+UART界面
+
+*/
+
+class UartFragment : Fragment() {
+
+private lateinit var rxView: TextView
+private lateinit var txEdit: EditText
+
+private lateinit var sendBtn: Button
+private lateinit var clearBtn: Button
+
+private lateinit var hexSwitch: Switch
+
+private var hexMode = false
+
+private lateinit var uart: UartManager
+
+override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+): View {
+
+    val v =
+        inflater.inflate(R.layout.fragment_uart, container, false)
+
+    rxView = v.findViewById(R.id.rx_view)
+    txEdit = v.findViewById(R.id.tx_edit)
+
+    sendBtn = v.findViewById(R.id.btn_send)
+    clearBtn = v.findViewById(R.id.btn_clear)
+
+    hexSwitch = v.findViewById(R.id.hex_switch)
+
+    sendBtn.setOnClickListener {
+
+        send()
+
+    }
+
+    clearBtn.setOnClickListener {
+
+        rxView.text = ""
+
+    }
+
+    hexSwitch.setOnCheckedChangeListener { _, b ->
+
+        hexMode = b
+
+    }
+
+    return v
+
+}
+
+private fun send() {
+
+    val text = txEdit.text.toString()
+
+    val data =
+
+        if (hexMode)
+
+            HexUtils.fromHex(text)
+
+        else
+
+            text.toByteArray()
+
+    uart.send(data)
+
+}
+
+fun onReceive(data: ByteArray) {
+
+    activity?.runOnUiThread {
+
+        val text =
+
+            if (hexMode)
+
+                HexUtils.toHex(data)
+
+            else
+
+                String(data)
+
+        rxView.append(text)
+
+    }
+
+}
+
+}

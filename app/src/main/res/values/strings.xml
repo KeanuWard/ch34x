@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ch34x</string>
+    <string name="uart_tab">UART</string>
+    <string name="spi_tab">SPI</string>
+    <string name="i2c_tab">I2C</string>
+    <string name="gpio_tab">GPIO</string>
+    <string name="eeprom_tab">EEPROM</string>
+</resources>
